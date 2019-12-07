@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:55:33 by yabakhar          #+#    #+#             */
-/*   Updated: 2019/12/07 07:00:58 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:43:20 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct		s_ft_select
 	int				cursor;
 	int				count;
 	int				col;
-	int				line;
+	int				rows_count;
 	int				win_col;
 	int				max_col;
 	int				max_len;
@@ -62,6 +62,8 @@ void				select_item(t_ft_select *ft_select);
 void				delete_item(t_ft_select *ft_select);
 void				rediment(void);
 void				end(t_ft_select *ft_select);
+
+void				set_signal(void);
 
 int		output(int str);
 void	print_args(t_ft_select *ft_select);

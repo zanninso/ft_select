@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 00:57:15 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 07:00:15 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:23:19 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void init(int ac, char **av, t_ft_select *ft_select)
 	tputs(tgetstr("vi", 0), 0, output);
 	rediment();
 	output(ft_select->fd + 255);
-	
+	set_signal();
 }
 
 int main(int ac, char **av)

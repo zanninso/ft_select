@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:38 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 06:45:03 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:43:56 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void print_args(t_ft_select *ft_select)
 			tputs(tgetstr("mr", 0), 0, output);
 		if(i == ft_select->cursor)
 			tputs(tgetstr("us", 0), 0, output);
-		line  = i % ft_select->line;
-		col = (ft_select->max_len + 1) * (i / ft_select->line);
+		line  = i % ft_select->rows_count;
+		col = (ft_select->max_len + 1) * (i / ft_select->rows_count);
 		tputs(tgoto(tgetstr("cm", 0), col, line), 0, output);
 		ft_putstr_fd(ft_select->items[i].content, ft_select->fd);
 		tputs(tgetstr("me", 0), 0, output);
