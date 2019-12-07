@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:12 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 02:54:19 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/07 07:01:34 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-void up_cursor(t_ft_select *ft_select)
-{
-	const int old_cursor_position = ft_select->cursor;
-
-	ft_select->cursor += ft_select->count - 1;
-	ft_select->cursor %= ft_select->count;
-	cursor_move(ft_select, old_cursor_position);
-}
-
-void down_cursor(t_ft_select *ft_select)
-{
-	const int old_cursor_position = ft_select->cursor;
-
-	ft_select->cursor += 1;
-	ft_select->cursor %= ft_select->count;
-	cursor_move(ft_select, old_cursor_position);
-}
 
 void select_item(t_ft_select *ft_select)
 {
@@ -38,7 +20,7 @@ void select_item(t_ft_select *ft_select)
 	tputs(tgoto(tgetstr("cm", 0), 0, ft_select->cursor), 0, output);
 	ft_putstr_fd(ft_select->items[ft_select->cursor].content, ft_select->fd);
 	tputs(tgetstr("me", 0), 0, output);
-	down_cursor(ft_select);
+	cur_down(ft_select);
 }
 
 void delete_item(t_ft_select *ft_select)
@@ -79,4 +61,20 @@ void end(t_ft_select *ft_select)
 	}
 	tputs(tgetstr("ve", 0), 0, output);
 	exit(0);
+}
+
+void			rediment(void)
+{
+	struct winsize		wn;
+
+	tputs(tgetstr("cl", NULL), 0,output);
+	ioctl(0, TIOCGWINSZ, &wn);
+	g_select->win_col = wn.ws_col;
+	g_select->line = wn.ws_row;
+	g_select->col = g_select->win_col / (g_select->max_len + 1);
+	g_select->max_col = g_select->count / wn.ws_row + !!(g_select->count % wn.ws_row);
+	if (g_select->col * g_select->line >= g_select->count)
+		print_args(g_select);
+	else
+		ft_putendl_fd("To Small", 0);
 }
