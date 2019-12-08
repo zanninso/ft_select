@@ -6,27 +6,11 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 00:57:15 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 13:23:19 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/08 01:32:53 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-void set_items(int ac, char **av, t_ft_select *ft_select)
-{
-	int i;
-
-	i = 0;
-	while (i < ac)
-	{
-		ft_select->items[i].content = av[i];
-		ft_select->items[i].selected = 0;
-		ft_select->items[i].len = ft_strlen(av[i]);
-		if (ft_select->max_len < ft_select->items[i].len)
-			ft_select->max_len = ft_select->items[i].len;
-		i++;
-	}
-}
 
 void init(int ac, char **av, t_ft_select *ft_select)
 {
@@ -65,7 +49,7 @@ int main(int ac, char **av)
 	while (1)
 	{
 		button = 0;
-		if (read(0, &button, sizeof(int)) > 0)
+		if (g_select->col * g_select->rows_count >= g_select->count && read(0, &button, sizeof(int)) > 0)
 		{
 			if (button == BUTTON_UP)
 				cur_up(&ft_select);
@@ -75,11 +59,17 @@ int main(int ac, char **av)
 				cur_right(&ft_select);
 			else if (button == BUTTON_LEFT)
 				cur_left(&ft_select);
+			else if (button == BUTTON_HOME)
+				cur_from_to(&ft_select,ft_select.cursor, 0);
+			else if (button == BUTTON_END)
+				cur_from_to(&ft_select,ft_select.cursor, ft_select.count - 1);
 			else if (button == BUTTON_SPACE)
 				select_item(&ft_select);
 			else if (button == BUTTON_ENTER)
 				end(&ft_select);
-			else if (button == BUTTON_DEL)
+			else if (button == BUTTON_R)
+				reset(ac, av, &ft_select);
+			else if (button == BUTTON_DEL || button == BUTTON_DEL2)
 				delete_item(&ft_select);
 		}
 	}

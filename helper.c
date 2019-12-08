@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:38 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 13:43:56 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/08 01:20:42 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@ int output(int str)
 	else
 		write(fd, &str, 1);
 	return (0);
+}
+
+void set_items(int ac, char **av, t_ft_select *ft_select)
+{
+	int i;
+
+	i = 0;
+	while (i < ac)
+	{
+		ft_select->items[i].content = av[i];
+		ft_select->items[i].selected = 0;
+		ft_select->items[i].len = ft_strlen(av[i]);
+		if (ft_select->max_len < ft_select->items[i].len)
+			ft_select->max_len = ft_select->items[i].len;
+		i++;
+	}
 }
 
 void print_args(t_ft_select *ft_select)

@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:55:33 by yabakhar          #+#    #+#             */
-/*   Updated: 2019/12/07 13:43:20 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/08 01:20:59 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 #define BUTTON_ENTER 10
 #define BUTTON_DEL 127
 #define BUTTON_DEL2 2117294875
+#define BUTTON_END 4610843
+#define BUTTON_HOME 4741915
+#define BUTTON_R 114
 
 int fd;
 
@@ -58,6 +61,8 @@ void				cur_up(t_ft_select *ft_select);
 void				cur_down(t_ft_select *ft_select);
 void				cur_right(t_ft_select *ft_select);
 void				cur_left(t_ft_select *ft_select);
+void				cur_from_to(t_ft_select *ft_select, int from, int to);
+void				reset(int ac, char **av, t_ft_select *ft_select);
 void				select_item(t_ft_select *ft_select);
 void				delete_item(t_ft_select *ft_select);
 void				rediment(void);
@@ -67,4 +72,5 @@ void				set_signal(void);
 
 int		output(int str);
 void	print_args(t_ft_select *ft_select);
+void	set_items(int ac, char **av, t_ft_select *ft_select);
 void	cursor_move(t_ft_select *ft_select, int old_cursor_position);

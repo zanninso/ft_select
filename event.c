@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:12 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/07 13:45:33 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/08 01:37:09 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			rediment(void)
 	struct winsize		wn;
 	const int cursor = g_select->cursor;
 
-	tputs(tgetstr("cl", NULL), 0,output);
+	tputs(tgetstr("cl", NULL), 1,output);
 	ioctl(0, TIOCGWINSZ, &wn);
 	g_select->win_col = wn.ws_col;
 	g_select->rows_count = wn.ws_row;
@@ -83,4 +83,12 @@ void			rediment(void)
 	}
 	else
 		ft_putendl_fd("To Small", 0);
+}
+
+void reset(int ac, char **av, t_ft_select *ft_select)
+{
+	ft_select->count = ac;
+	set_items(ac, av, ft_select);
+	rediment();
+	cur_from_to(ft_select, ft_select->cursor, 0);
 }
