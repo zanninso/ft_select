@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 00:57:15 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/08 01:32:53 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/09 02:22:04 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int main(int ac, char **av)
 	ft_select.cursor = 0;
 	ft_select.max_len = 0;
 	init(ac, av, &ft_select);
+	// print_args(g_select);
 	while (1)
 	{
 		button = 0;
@@ -60,9 +61,9 @@ int main(int ac, char **av)
 			else if (button == BUTTON_LEFT)
 				cur_left(&ft_select);
 			else if (button == BUTTON_HOME)
-				cur_from_to(&ft_select,ft_select.cursor, 0);
+				cursor_move(&ft_select,ft_select.cursor, 0);
 			else if (button == BUTTON_END)
-				cur_from_to(&ft_select,ft_select.cursor, ft_select.count - 1);
+				cursor_move(&ft_select,ft_select.cursor, ft_select.count - 1);
 			else if (button == BUTTON_SPACE)
 				select_item(&ft_select);
 			else if (button == BUTTON_ENTER)

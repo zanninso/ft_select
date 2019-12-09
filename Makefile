@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/07 00:56:57 by aait-ihi          #+#    #+#              #
-#    Updated: 2019/12/07 13:24:48 by aait-ihi         ###   ########.fr        #
+#    Updated: 2019/12/09 01:41:12 by aait-ihi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = ft_select
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-SRCS = main.c helper.c event.c cursor_move.c signal.c
+SRCS = main.c helper.c event.c cursor_move.c signal.c clean_win.c
 
 LIBFT = libft/libft.a
 

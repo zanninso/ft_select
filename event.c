@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:12 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/08 01:37:09 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/09 02:22:30 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void select_item(t_ft_select *ft_select)
 	if (ft_select->items[ft_select->cursor].selected)
 		tputs(tgetstr("mr", 0), 0, output);
 	tputs(tgoto(tgetstr("cm", 0), 0, ft_select->cursor), 0, output);
+
 	ft_putstr_fd(ft_select->items[ft_select->cursor].content, ft_select->fd);
 	tputs(tgetstr("me", 0), 0, output);
 	cur_down(ft_select);
@@ -27,51 +28,53 @@ void delete_item(t_ft_select *ft_select)
 {
 	const int count = ft_select->count - 1;
 	const int cursor = ft_select->cursor;
-
 	t_item *items;
+
 	if (count == 0)
 		end(ft_select);
 	items = ft_select->items;
-	tputs(tgoto(tgetstr("cm", 0), 0, ft_select->cursor), 0, output);
-	tputs(tgetstr("cd", 0), 0, output);
+	delete_last_line(ft_select);
+	delete_char(ft_select, ft_select->max_col);
 	ft_select->count--;
 	if (cursor < ft_select->count)
-	{
 		ft_memcpy(&items[cursor], &items[cursor + 1], sizeof(t_item) * (count - cursor));
-		print_args(ft_select);
-	}
 	else
-	{
 		ft_select->cursor--;
-		print_args(ft_select);
-	}
+	print_args(ft_select);
 }
 
 void end(t_ft_select *ft_select)
 {
 	int i;
+	struct termios config;
 
 	i = 0;
+	if (tcgetattr(0, &(config)) == -1)
+		return ;
+	config.c_lflag |= (ICANON | ECHO);
+	if (tcsetattr(0, 0, &(config)) == -1)
+		return ;
 	tputs(tgetstr("te", 0), 0, output);
+	tputs(tgetstr("ve", 0), 0, output);
 	while (i < ft_select->count)
 	{
 		if (ft_select->items[i].selected)
 			ft_putendl_fd(ft_select->items[i].content, 0);
 		i++;
 	}
-	tputs(tgetstr("ve", 0), 0, output);
+
 	exit(0);
 }
 
-void			rediment(void)
+void rediment(void)
 {
-	struct winsize		wn;
+	struct winsize wn;
 	const int cursor = g_select->cursor;
 
-	tputs(tgetstr("cl", NULL), 1,output);
 	ioctl(0, TIOCGWINSZ, &wn);
 	g_select->win_col = wn.ws_col;
 	g_select->rows_count = wn.ws_row;
+	clean_win(g_select);
 	g_select->col = g_select->win_col / (g_select->max_len + 1);
 	g_select->max_col = g_select->count / wn.ws_row + !!(g_select->count % wn.ws_row);
 	if (g_select->col * g_select->rows_count >= g_select->count)
@@ -79,7 +82,7 @@ void			rediment(void)
 		g_select->cursor = 0;
 		print_args(g_select);
 		g_select->cursor = cursor;
-		cursor_move(g_select, 0);
+		cursor_move(g_select,g_select->cursor, 0);
 	}
 	else
 		ft_putendl_fd("To Small", 0);
@@ -90,5 +93,5 @@ void reset(int ac, char **av, t_ft_select *ft_select)
 	ft_select->count = ac;
 	set_items(ac, av, ft_select);
 	rediment();
-	cur_from_to(ft_select, ft_select->cursor, 0);
+	cursor_move(ft_select, ft_select->cursor, 0);
 }
