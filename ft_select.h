@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_select.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:55:33 by yabakhar          #+#    #+#             */
-/*   Updated: 2019/12/09 02:19:25 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:44:27 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct		s_item
 typedef struct		s_ft_select
 {
 	t_item			*items;
+	struct termios	config0;
+	struct termios	config;
 	int				fd;
 	int				cursor;
 	int				count;
@@ -75,6 +77,7 @@ void	print_args(t_ft_select *ft_select);
 void	set_items(int ac, char **av, t_ft_select *ft_select);
 void	cursor_move(t_ft_select *ft_select, int old_cursor, int new_cursor);
 void	cur_goto(t_ft_select *ft_select, int cursor);
+void	configure_terminal(t_ft_select *ft_select);
 
 void	deactive_modes();
 void	active_modes(t_ft_select *ft_select,int  cursor);
@@ -83,3 +86,5 @@ void	active_modes(t_ft_select *ft_select,int  cursor);
 void	delete_char(t_ft_select *ft_select, size_t num);
 void	delete_last_line(t_ft_select *ft_select);
 void	clean_win(t_ft_select *ft_select);
+
+void sig_dispatch(int a);

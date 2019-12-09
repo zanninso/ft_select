@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:44:12 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/12/09 02:22:30 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/12/09 15:41:15 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void select_item(t_ft_select *ft_select)
 {
 	ft_select->items[ft_select->cursor].selected ^= 1;
-	if (ft_select->items[ft_select->cursor].selected)
-		tputs(tgetstr("mr", 0), 0, output);
-	tputs(tgoto(tgetstr("cm", 0), 0, ft_select->cursor), 0, output);
-
+	active_modes(ft_select, ft_select->cursor);
+	cur_goto(ft_select, ft_select->cursor);
 	ft_putstr_fd(ft_select->items[ft_select->cursor].content, ft_select->fd);
-	tputs(tgetstr("me", 0), 0, output);
+	deactive_modes();
 	cur_down(ft_select);
 }
 
@@ -82,7 +80,7 @@ void rediment(void)
 		g_select->cursor = 0;
 		print_args(g_select);
 		g_select->cursor = cursor;
-		cursor_move(g_select,g_select->cursor, 0);
+		cursor_move(g_select, g_select->cursor, 0);
 	}
 	else
 		ft_putendl_fd("To Small", 0);
